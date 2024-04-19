@@ -106,7 +106,8 @@ static inline uint64_t hweight64(u64 w)
  * position @h. For example
  * GENMASK_ULL(39, 21) gives us the 64bit vector 0x000000ffffe00000.
  */
-#ifndef _WIN32
+#if !(defined _WIN32) && \
+    !(defined __EMSCRIPTEN__)
 #define GENMASK(h, l) (((~0UL) << (l)) & (~0UL >> (BITS_PER_LONG - 1 - (h))))
 #else 
 #define GENMASK GENMASK_ULL
