@@ -4,7 +4,7 @@ on:
   push:
     branches: ["dev"]
     paths:
-      - ".github/workflows/build_dev.yml"
+      - ".github/workflows/build.yml"
       - "kernel/**"
       - "user/**"
       - "tools/**"
@@ -12,11 +12,13 @@ on:
   pull_request:
     branches: ["dev"]
     paths:
-      - ".github/workflows/build_dev.yml"
+      - ".github/workflows/build.yml"
       - "kernel/**"
       - "user/**"
       - "tools/**"
       - "version"
+  workflow_call:
+  workflow_dispatch:
 
 jobs:
   Build-kpimg:
@@ -56,14 +58,17 @@ jobs:
           mv kpimg.elf kpimg.elf-android
 
           cd ..
-          cd kpm-demo
-          cd hello
+          cd kpms
+
+          cd demo-hello
           make
           mv hello.kpm demo-hello.kpm
-          cd ../inlinehook
+
+          cd ../demo-inlinehook
           make
           mv inlinehook.kpm demo-inlinehook.kpm
-          cd ../syscallhook
+
+          cd ../demo-syscallhook
           make
           mv syscallhook.kpm demo-syscallhook.kpm
 
@@ -84,9 +89,9 @@ jobs:
           artifacts: |
             kernel/kpimg-linux
             kernel/kpimg-android
-            kpm-demo/hello/demo-hello.kpm
-            kpm-demo/inlinehook/demo-inlinehook.kpm
-            kpm-demo/syscallhook/demo-syscallhook.kpm
+            kpms/demo-hello/demo-hello.kpm
+            kpms/demo-inlinehook/demo-inlinehook.kpm
+            kpms/demo-syscallhook/demo-syscallhook.kpm
           generateReleaseNotes: true
           allowUpdates: true
           replacesArtifacts: true

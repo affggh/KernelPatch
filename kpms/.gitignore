@@ -25,8 +25,11 @@
 
 build/*
 
-preset.h
-kptools
+# 
+*.bin
+*.elf
+
+*.kpm
 
 # 
-build_android.sh
+private

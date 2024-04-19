@@ -157,7 +157,6 @@ void kfunc_def(fork_init)(void) = 0;
 void kfunc_def(set_mm_exe_file)(struct mm_struct *mm, struct file *new_exe_file) = 0;
 struct file *kfunc_def(get_mm_exe_file)(struct mm_struct *mm) = 0;
 struct file *kfunc_def(get_task_exe_file)(struct task_struct *task) = 0;
-struct mm_struct *kfunc_def(get_task_mm)(struct task_struct *task) = 0;
 struct mm_struct *kfunc_def(mm_access)(struct task_struct *task, unsigned int mode) = 0;
 void kfunc_def(exit_mm_release)(struct task_struct *tsk, struct mm_struct *mm) = 0;
 void kfunc_def(exec_mm_release)(struct task_struct *tsk, struct mm_struct *mm) = 0;
@@ -180,7 +179,6 @@ static void _linux_kernel_fork_sym_match(const char *name, unsigned long addr)
     // kfunc_match(set_mm_exe_file, name, addr);
     // kfunc_match(get_mm_exe_file, name, addr);
     // kfunc_match(get_task_exe_file, name, addr);
-    // kfunc_match(get_task_mm, name, addr);
     // kfunc_match(mm_access, name, addr);
     // kfunc_match(exit_mm_release, name, addr);
     // kfunc_match(exec_mm_release, name, addr);
@@ -304,10 +302,10 @@ void kfunc_def(kfree)(const void *) = 0;
 
 static void _linux_mm_utils_sym_match(const char *name, unsigned long addr)
 {
-    kfunc_match(kfree_const, name, addr);
-    kfunc_match(kstrdup, name, addr);
-    kfunc_match(kstrdup_const, name, addr);
-    kfunc_match(kstrndup, name, addr);
+    // kfunc_match(kfree_const, name, addr);
+    // kfunc_match(kstrdup, name, addr);
+    // kfunc_match(kstrdup_const, name, addr);
+    // kfunc_match(kstrndup, name, addr);
     // kfunc_match(kmemdup, name, addr);
     // kfunc_match(kmemdup_nul, name, addr);
     kfunc_match(memdup_user, name, addr);
@@ -324,8 +322,8 @@ static void _linux_mm_utils_sym_match(const char *name, unsigned long addr)
     // kfunc_match(__page_mapcount, name, addr);
     // kfunc_match(vm_memory_committed, name, addr);
     // kfunc_match(get_cmdline, name, addr);
-    kfunc_match(__kmalloc, name, addr);
-    kfunc_match(kmalloc, name, addr);
+    // kfunc_match(__kmalloc, name, addr);
+    // kfunc_match(kmalloc, name, addr);
     kfunc_match(kfree, name, addr);
 }
 
@@ -594,9 +592,9 @@ static void _linux_security_selinux_sym_match(const char *name, unsigned long ad
     // kfunc_match(security_read_policy, name, addr);
     // kfunc_match(security_read_state_kernel, name, addr);
     // kfunc_match(security_policycap_supported, name, addr);
-    kfunc_match(security_compute_av, name, addr);
-    kfunc_match(security_compute_xperms_decision, name, addr);
-    kfunc_match(security_compute_av_user, name, addr);
+    // kfunc_match(security_compute_av, name, addr);
+    // kfunc_match(security_compute_xperms_decision, name, addr);
+    // kfunc_match(security_compute_av_user, name, addr);
     // kfunc_match(security_transition_sid, name, addr);
     // kfunc_match(security_transition_sid_user, name, addr);
     // kfunc_match(security_member_sid, name, addr);
@@ -723,10 +721,18 @@ static void _linux_seccomp_sym_match(const char *name, unsigned long addr)
 void kfunc_def(panic)(const char *fmt, ...) __noreturn __cold = 0;
 int kfunc_def(call_usermodehelper)(const char *path, char **argv, char **envp, int wait) = 0;
 
+// /drivers/char/random.c
+void kfunc_def(get_random_bytes)(void *buf, int nbytes) = 0;
+uint64_t kfunc_def(get_random_u64)(void) = 0;
+uint64_t kfunc_def(get_random_long)(void) = 0;
+
 static void _linux_misc_misc(const char *name, unsigned long addr)
 {
     kfunc_match(panic, name, addr);
-    kfunc_match(call_usermodehelper, name, addr);
+    // kfunc_match(call_usermodehelper, name, addr);
+    // kfunc_match(get_random_bytes, name, addr);
+    // kfunc_match(get_random_u64, name, addr);
+    // kfunc_match(get_random_long, name, addr);
 }
 
 // linux/bottom_half.h
